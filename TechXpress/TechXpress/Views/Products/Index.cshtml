@@ -1,8 +1,6 @@
 ﻿@model ProductDetailsVm
 @using System.Linq;
 
-
-
 <body>
 
     <!-- SECTION -->
@@ -106,7 +104,7 @@
                         <!-- nav -->
                         <ul class="tab-nav">
                             <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                            <li><a data-toggle="tab" href="#tab3">Reviews (@Model.Product.Reviews.Count())</a></li>
+                            <li><a data-toggle="tab" href="#tab3">Reviews @(Model.Product.Reviews?.Count() ?? 0)</a></li>
                         </ul>
 
                         <!-- content -->
@@ -125,11 +123,14 @@
                                     <div class="col-md-3">
                                         <div id="rating">
                                             <div class="rating-avg">
-                                               @* <span>@Model.Product.Rating.Averge().ToString("0.0")</span>*@
-                                                @*@<div class="rating-stars">
+                                                <span>@(Model.Product.Reviews?.Any() == true ? Model.Product.Reviews.Average(r => r.Rating).ToString("0.0") : "0.0")</span>
+                                                <div class="rating-stars">
+                                                    @{
+                                                        var avgRating = Model.Product.Reviews?.Any() == true ? Model.Product.Reviews.Average(r => r.Rating) : 0;
+                                                    }
                                                     @for (int i = 1; i <= 5; i++)
                                                     {
-                                                        if (i <= Math.Round(Model.Product.AverageRating))
+                                                        if (i <= Math.Round(avgRating))
                                                         {
                                                             <i class="fa fa-star"></i>
                                                         }
@@ -138,95 +139,111 @@
                                                             <i class="fa fa-star-o"></i>
                                                         }
                                                     }
-                                                </div>*@
+                                                </div>
                                             </div>
-                                           @* <ul class="rating">
-                                                @foreach (var group in Model.Product.Reviews
-                                                .GroupBy(r => r.Rating)
-                                                .OrderByDescending(g => g.Key))
-                                                {
-                                                    <li>
-                                                        <div class="rating-stars">
-                                                            @for (int i = 1; i <= 5; i++)
-                                                            {
-                                                                if (i <= group.Key)
+                                           
+                                            @if (Model.Product.Reviews?.Any() == true)
+                                            {
+                                                <ul>
+                                                    @foreach (var group in Model.Product.Reviews
+                                                    .GroupBy(r => r.Rating)
+                                                    .OrderByDescending(g => g.Key))
+                                                    {
+                                                        <li>
+                                                            <div class="rating-stars">
+                                                                @for (int i = 1; i <= 5; i++)
                                                                 {
-                                                                    <i class="fa fa-star"></i>
-                                                                    ;
+                                                                    if (i <= group.Key)
+                                                                    {
+                                                                        <i class="fa fa-star"></i>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <i class="fa fa-star-o"></i>
+                                                                    }
                                                                 }
-                                                                else
-                                                                {
-                                                                    <i class="fa fa-star-o"></i>
-                                                                    ;
-                                                                }
-                                                            }
-                                                        </div>
-                                                        <div class="rating-progress">
-                                                            <div style="width: @(group.Count() * 100.0 / Model.Product.Reviews.Count())%;"></div>
-                                                        </div>
-                                                        <span class="sum">@group.Count()</span>
-                                                    </li>
-                                                }
-                                            </ul>*@
+                                                            </div>
+                                                            <div class="rating-progress">
+                                                                <div style="width: @(group.Count() * 100.0 / Model.Product.Reviews.Count())%;"></div>
+                                                            </div>
+                                                            <span class="sum">@group.Count()</span>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
                                         </div>
                                     </div>
                                     <!-- /Rating -->
                                     <!-- Reviews -->
-                                   @* <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <div id="reviews">
-                                            <ul class="reviews">
-                                                @foreach (var review in Model.Product.Reviews)
-                                                {
-                                                    <li>
-                                                        <div class="review-heading">
-                                                            <h5 class="name">@review.UserName</h5>
-                                                            <p class="date">@review.Date.ToString("dd MMM yyyy, h:mm tt")</p>
-                                                            <div class="review-rating">
-                                                                @for (int i = 1; i <= 5; i++)
-                                                                {
-                                                                    if (i <= review.Rating)
+                                            @if (Model.Product.Reviews?.Any() == true)
+                                            {
+                                                <ul class="reviews">
+                                                    @foreach (var review in Model.Product.Reviews)
+                                                    {
+                                                        <li>
+                                                            <div class="review-heading">
+                                                                <h5 class="name">@review.UserName</h5>
+                                                                <p class="date">@review.CreatedAt.ToString("dd MMM yyyy, h:mm tt")</p>
+                                                                <div class="review-rating">
+                                                                    @for (int i = 1; i <= 5; i++)
                                                                     {
-                                                                        <i class="fa fa-star"></i>
-                                                                        ;
+                                                                        if (i <= review.Rating)
+                                                                        {
+                                                                            <i class="fa fa-star"></i>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <i class="fa fa-star-o empty"></i>
+                                                                        }
                                                                     }
-                                                                    else
-                                                                    {
-                                                                        <i class="fa fa-star-o empty"></i>
-                                                                        ;
-                                                                    }
-                                                                }
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="review-body">
-                                                            <p>@review.Comment</p>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            </ul>
-                                            <ul class="reviews-pagination">
-                                                @* pagination logic 
-                                            </ul>
+                                                            <div class="review-body">
+                                                                <p>@review.Comment</p>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+                                            else
+                                            {
+                                                <p>No reviews yet. Be the first to review this product!</p>
+                                            }
                                         </div>
-                                    </div>*@
+                                    </div>
                                     <!-- /Reviews -->
                                     <!-- Review Form -->
                                     <div class="col-md-3">
                                         <div id="review-form">
+                                            @if (TempData["SuccessMessage"] != null)
+                                            {
+                                                <div class="alert alert-success">
+                                                    @TempData["SuccessMessage"]
+                                                </div>
+                                            }
+                                            @if (TempData["ErrorMessage"] != null)
+                                            {
+                                                <div class="alert alert-danger">
+                                                    @TempData["ErrorMessage"]
+                                                </div>
+                                            }
                                             <form asp-action="AddReview" asp-route-id="@Model.Product.Id" method="post" class="review-form">
-                                                <input name="UserName" class="input" type="text" placeholder="Your Name" />
-                                                <input name="Email" class="input" type="email" placeholder="Your Email" />
-                                                <textarea name="Comment" class="input" placeholder="Your Review"></textarea>
+                                                <input name="UserName" class="input" type="text" placeholder="Your Name" required />
+                                                <input name="Email" class="input" type="email" placeholder="Your Email" required />
+                                                <textarea name="Comment" class="input" placeholder="Your Review" required></textarea>
                                                 <div class="input-rating">
                                                     <span>Your Rating: </span>
                                                     <div class="stars">
                                                         @for (int i = 5; i >= 1; i--)
                                                         {
-                                                            <input id="star@i" name="Rating" value="@i" type="radio" />
+                                                            <input id="star@i" name="Rating" value="@i" type="radio" required />
                                                             <label for="star@i"></label>
                                                         }
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="primary-btn">Submit</button>
+                                                <button type="submit" class="primary-btn">Submit Review</button>
                                             </form>
                                         </div>
                                     </div>
@@ -235,45 +252,41 @@
                     </div>
                 </div>
                 <!-- /Product tab -->
-
             </div>
         </div>
     </div>
     <!-- /SECTION -->
+
     <!-- Related Products Section -->
     <div class="section">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="section-title text-center">
+                    <div class="section-title">
                         <h3 class="title">Related Products</h3>
                     </div>
                 </div>
-
-                @foreach (var item in Model.RelatedProducts)
+                @foreach (var item in Model.RelatedProducts.Take(4))
                 {
                     <div class="col-md-3 col-xs-6">
                         <div class="product">
                             <div class="product-img">
                                 <img src="~/img/@item.Image" alt="@item.Name" />
-                                @* لو عندك SalePercentage: *@
-                                @if (item.SalesPercentage > 0)
-                                {
-                                    <div class="product-label">
-                                        <span class="sale">-@item.SalesPercentage%</span>
-                                    </div>
-                                }
-                                else if (item.IsNew)
-                                {
-                                    <div class="product-label">
+                                <div class="product-label">
+                                    @if (item.HasDiscount)
+                                    {
+                                        <span class="sale">-@(item.Discount)%</span>
+                                    }
+                                    @if (item.State == "New")
+                                    {
                                         <span class="new">NEW</span>
-                                    </div>
-                                }
+                                    }
+                                </div>
                             </div>
                             <div class="product-body">
                                 <p class="product-category">@item.CategoryName</p>
                                 <h3 class="product-name">
-                                    <a asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                    <a asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
                                 </h3>
                                 <h4 class="product-price">
                                     @item.Price.ToString("C")
@@ -283,20 +296,31 @@
                                     }
                                 </h4>
                                 <div class="product-rating">
-                                    @* Loop على النجوم حسب item.Rating *@
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= item.Rating)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-star-o"></i>
+                                        }
+                                    }
                                 </div>
                                 <div class="product-btns">
-                                    <button class="add-to-wishlist">
+                                    <a class="add-to-wishlist" asp-controller="Wishlist" asp-action="AddItem" asp-route-productId="@item.Id">
                                         <i class="fa fa-heart-o"></i>
                                         <span class="tooltipp">add to wishlist</span>
-                                    </button>
-                                    
+                                    </a>
                                 </div>
                             </div>
                             <div class="add-to-cart">
-                                <button class="add-to-cart-btn">
-                                    <i class="fa fa-shopping-cart"></i> add to cart
-                                </button>
+                                <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@item.Id">
+                                    <button class="add-to-cart-btn">
+                                        <i class="fa fa-shopping-cart"></i> add to cart
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>

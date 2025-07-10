@@ -12,8 +12,8 @@ using TechXpress.Context;
 namespace TechXpress_DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250517160354_editOrdersTable")]
-    partial class editOrdersTable
+    [Migration("20250710201711_OrderPage")]
+    partial class OrderPage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -574,10 +574,17 @@ namespace TechXpress_DAL.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -585,6 +592,10 @@ namespace TechXpress_DAL.Migrations
 
                     b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

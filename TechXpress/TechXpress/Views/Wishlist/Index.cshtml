@@ -34,7 +34,8 @@
 
 						<div class="product-widget wishlist-item">
 							<div class="row">
-								@foreach (var item in Model){
+								@foreach (var item in Model)
+								{
 									<div class="col-md-4 mb-4 wishlist-item" data-item-id="@item.Id">
 										<div class="card h-100">
 											@if (!string.IsNullOrEmpty(item.Product.Image))
@@ -45,7 +46,7 @@
 												<h5 class="card-title">@item.Product.Name</h5>
 												<p class="card-text">@item.Product.Price.ToString("C")</p>
 												<div class="d-flex justify-content-between">
-													<a  class="btn btn-primary">View Details</a>
+													<a class="btn btn-primary">View Details</a>
 													<button class="btn btn-danger remove-from-wishlist" data-id="@item.Id">
 														<i class="fa fa-trash"></i> Remove
 													</button>
@@ -60,23 +61,23 @@
 					}
 					<div class="wishlist-divider"></div>
 
-				<div class="wishlist-footer">
-					<div class="row">
-						<div class="col-md-6 col-xs-12">
-							<a href="#" class="primary-btn">Continue Shopping</a>
-						</div>
-						<div class="col-md-6 col-xs-12 text-right">
-							<button class="add-all-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add All to Cart</button>
+					<div class="wishlist-footer">
+						<div class="row">
+							<div class="col-md-6 col-xs-12">
+								<a href="#" class="primary-btn">Continue Shopping</a>
+							</div>
+							<div class="col-md-6 col-xs-12 text-right">
+								<button class="add-all-to-cart-btn"><i class="fa fa-shopping-cart"></i> Add All to Cart</button>
+							</div>
 						</div>
 					</div>
 				</div>
+				<!-- /Wishlist Products -->
 			</div>
-			<!-- /Wishlist Products -->
+			<!-- /row -->
 		</div>
-		<!-- /row -->
+		<!-- /container -->
 	</div>
-	<!-- /container -->
-</div>
 </div>
 @* <script> *@
 @*    function ConfirmRemoving(a){ *@

@@ -140,3 +140,40 @@ $(document).ready(function () {
         }
     }
 });
+document.addEventListener('DOMContentLoaded', function () {
+    // Get all remove buttons
+    const removeButtons = document.querySelectorAll('.remove-from-wishlist');
+
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const itemId = this.getAttribute('data-id');
+
+            // Show confirmation dialog
+            //const userConfirmed = confirm("Are you sure you want to remove this item from your wishlist?");
+
+          
+                // Make AJAX call to remove item
+                fetch('/Wishlist/RemoveFromWishlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+                    },
+                    body: JSON.stringify({ id: itemId })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Refresh the page after successful removal
+                            location.reload();
+                        } else {
+                            alert('Error removing item from wishlist');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error removing item from wishlist');
+                    });
+            
+        });
+    });
+});

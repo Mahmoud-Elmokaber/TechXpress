@@ -41,72 +41,117 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Order -->
                 <div class="col-md-5 order-details">
-                    <div class="section-title text-center">
+                    <div class="section-title text-center mb-4">
                         <h3 class="title">Your Order</h3>
                     </div>
 
-                    <div class="order-summary">
-                        <div class="order-col">
+                    <div class="order-summary border rounded p-3 mb-4">
+                        <!-- Header -->
+                        <div class="order-col d-flex justify-content-between border-bottom pb-2 mb-2">
                             <div><strong>PRODUCT</strong></div>
                             <div><strong>TOTAL</strong></div>
                         </div>
 
-                        <div class="order-products">
+                        <!-- Products -->
+                        <div class="order-products mb-3">
                             @foreach (var item in Model.CartItems)
                             {
-                                <div class="order-col">
+                                <div class="order-col d-flex justify-content-between mb-1">
                                     <div>@item.Quantity x @item.ProductName</div>
-                                    <div>$@item.Price</div>
+                                    <div>$@(item.Price * item.Quantity)</div>
                                 </div>
                             }
                         </div>
 
-                        <div class="order-col">
+                        <!-- Shipping -->
+                        <div class="order-col d-flex justify-content-between border-top pt-2 mt-2">
                             <div>Shipping</div>
                             <div><strong>FREE</strong></div>
                         </div>
 
-                        <div class="order-col">
+                        <!-- Total -->
+                        <div class="order-col d-flex justify-content-between border-top pt-2 mt-2">
                             <div><strong>TOTAL</strong></div>
                             <div><strong class="order-total">$@Model.TotalAmount</strong></div>
                         </div>
-                    </div>
 
-                    <div class="payment-method">
-                        <div class="input-radio">
-                            <input type="radio" name="PaymentMethod" id="payment-cash" value="CashOnDelivery" checked>
-                            <label for="payment-cash">
-                                <span></span>
-                                Cash on Delivery
-                            </label>
-                            <div class="caption">
-                                <p>You will pay when the order is delivered to your address.</p>
+                        <!-- Payment Options -->
+                        <div class="payment-method mt-4">
+                            <h5 class="mb-3">Payment Method</h5>
+
+                            <div class="form-check mb-2">
+                                <input asp-for="PaymentMethod" class="form-check-input" type="radio" id="payment-cash" value="CashOnDelivery" checked />
+                                <label class="form-check-label" for="payment-cash">
+                                    Cash on Delivery
+                                </label>
+                                <div class="form-text">
+                                    You will pay when the order is delivered to your address.
+                                </div>
                             </div>
+
+                            <div class="form-check mb-2">
+                                <input asp-for="PaymentMethod" class="form-check-input" type="radio" id="payment-stripe" value="Stripe" />
+                                <label class="form-check-label" for="payment-stripe">
+                                    Pay with Stripe
+                                </label>
+                                <div class="form-text">
+                                    Secure card payment using Stripe.
+                                </div>
+                            </div>
+
+                            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
                         </div>
 
-                        <div class="input-radio">
-                            <input type="radio" name="PaymentMethod" id="payment-stripe" value="Stripe">
-                            <label for="payment-stripe">
-                                <span></span>
-                                Pay with Stripe
-                            </label>
-                            <div class="caption">
-                                <p>Secure card payment using Stripe.</p>
-                            </div>
+                        <!-- Place Order Button -->
+
+                        <div class="input-checkbox">
+                            <input type="checkbox" id="terms" required />
+                            <label for="terms"><span></span> I've read and accept the <a href="#">terms & conditions</a></label>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="primary-btn order-submit">
+                                Place Order
+                            </button>
                         </div>
                     </div>
-
-
-                    <div class="input-checkbox">
-                        <input type="checkbox" id="terms" required />
-                        <label for="terms"><span></span> I've read and accept the <a href="#">terms & conditions</a></label>
-                    </div>
-
-                    <button type="submit" class="primary-btn order-submit">Place order</button>
                 </div>
+
+
+
+                 @*    <div class="payment-method"> 
+                       <div class="input-radio"> 
+                           <input type="radio" name="PaymentMethod" id="payment-cash" value="CashOnDelivery" checked> 
+                           <label for="payment-cash"> 
+                               <span></span>
+                               Cash on Delivery 
+                           </label> 
+                           <div class="caption"> 
+                               <p>You will pay when the order is delivered to your address.</p> 
+                           </div> 
+                       </div> 
+
+                       <div class="input-radio"> 
+                           <input type="radio" name="PaymentMethod" id="payment-stripe" value="Stripe"> 
+                           <label for="payment-stripe"> 
+                               <span></span> 
+                               Pay with Stripe
+                           </label> 
+                           <div class="caption">
+                               <p>Secure card payment using Stripe.</p> 
+                           </div> 
+                       </div> 
+                   </div>
+ *@
+
+                @*     <div class="input-checkbox"> *@
+                @*         <input type="checkbox" id="terms" required /> *@
+                @*         <label for="terms"><span></span> I've read and accept the <a href="#">terms & conditions</a></label> *@
+                @*     </div> *@
+
+                @*     <button type="submit" class="primary-btn order-submit">Place order</button> *@
+                @* </div> *@
 
             </div>
         </div>

@@ -45,7 +45,7 @@
 			<div class="container">
 				<ul class="header-links pull-left">
 					<li><a href="tel:+021-95-51-84"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-					<li><a href="mailto:email@email.com"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+					<li><a href="mailto:techXpress@gmail.com"><i class="fa fa-envelope-o"></i> techXpress@gmail.com</a></li>
 					<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
 				</ul>
 				<ul class="header-links pull-right">
@@ -129,10 +129,10 @@
 								<a asp-controller="Wishlist" asp-action="Index">
 									<i class="fa fa-heart-o"></i>
 									<span>Wishlist</span>
-									@if(ViewBag.Wishlists !=0)
-									{
-										<div class="qty">@ViewBag.Wishlists</div>
-									}
+									@* @if(ViewBag.Wishlists !=0) *@
+									@* { *@
+									@* 	<div class="qty">@ViewBag.Wishlists</div> *@
+									@* } *@
 								</a>
 							</div>
 							<!-- /Wishlist -->
@@ -141,10 +141,10 @@
 								<a class="dropdown-toggle" asp-controller="Cart" asp-action="Index" data-toggle="dropdown" aria-expanded="true">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Cart</span>
-									@if (ViewBag.Carts != 0)
-									{
-									<div class="qty">@ViewBag.Carts</div> // count
-									}
+									@* @if (ViewBag.Carts != 0) *@
+									@* { *@
+									@* <div class="qty">@ViewBag.Carts</div> // count *@
+									@* } *@
 								</a>
 								<div class="cart-dropdown">
 @* 									<div class="cart-list">
@@ -170,10 +170,10 @@
 											<button class="delete"><i class="fa fa-close"></i></button>
 										</div> *@
 									</@* div *@>
-									<div class="cart-summary">
-										<small>3 Item(s) selected</small>
-										<h5>SUBTOTAL: $2940.00</h5>
-									</div>
+									@* <div class="cart-summary"> *@
+									@* 	<small>3 Item(s) selected</small> *@
+									@* 	<h5>SUBTOTAL: $2940.00</h5> *@
+									@* </div> *@
 									<div class="cart-btns">
 										<a asp-controller="Cart" asp-action="Index">View Cart</a>
 										<a asp-controller="Checkout" asp-action="Index">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
