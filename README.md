@@ -25,7 +25,7 @@ This separation ensures modularity, scalability, and maintainability.
 ## Technologies Used
 
 - **Backend**: ASP.NET Core
-- **Frontend**: HTML, CSS (custom styles for cart, product pages, checkout, etc.), JavaScript (jQuery for UI interaction)
+- **Frontend**: Based on the "Electro-Master" template (heavily customized), using HTML, CSS, JavaScript (jQuery, Razor), with custom features and pages developed by our team.
 - **Database**: SQL Server (via Entity Framework Core)
 - **ORM**:  Entity Framework Core
 - **Authentication**: ASP.NET Core Identity
