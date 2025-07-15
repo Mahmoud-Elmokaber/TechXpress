@@ -11,7 +11,7 @@ TechXpress is an innovative e-commerce platform designed for buying and selling 
 - **Order Management**: Place orders and track their status.
 - **Payment Integration**: Secure payments processed via Stripe.
 - **Responsive UI**: Modern, mobile-friendly design using custom CSS and JavaScript for smooth user experience.
-- **Admin Features**: (If implemented) Product management, order tracking, and analytics.
+- **Admin Features**:  Product management, order tracking, and analytics.
 
 ## Architecture
 
